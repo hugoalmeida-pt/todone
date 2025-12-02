@@ -1,0 +1,163 @@
+{
+  "name": "todone",
+  "displayName": "ToDone",
+  "description": "A simple and elegant todo list manager for VS Code. Manage project tasks directly in your sidebar with collapsible sections, drag-and-drop, and persistent storage.",
+  "version": "1.0.0",
+  "publisher": "hugoalmeida",
+  "author": {
+    "name": "Hugo Almeida"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/hugoalmeida-pt/todone#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hugoalmeida-pt/todone.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hugoalmeida-pt/todone/issues"
+  },
+  "keywords": [
+    "todo",
+    "task",
+    "todo list",
+    "task manager",
+    "productivity",
+    "project management",
+    "checklist",
+    "tasks"
+  ],
+  "icon": "resources/icon.png",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "todone-explorer",
+          "title": "Todo List",
+          "icon": "resources/todo-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "todone-explorer": [
+        {
+          "id": "todoneTodoList",
+          "name": "Tasks"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "todone.addTodo",
+        "title": "Add Todo",
+        "icon": "$(add)"
+      },
+      {
+        "command": "todone.toggleDone",
+        "title": "Toggle Done",
+        "icon": "$(check)"
+      },
+      {
+        "command": "todone.deleteTodo",
+        "title": "Delete Todo",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "todone.refresh",
+        "title": "Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "todone.clearCompleted",
+        "title": "Clear Completed",
+        "icon": "$(clear-all)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "todone.addTodo",
+          "when": "view == todoneTodoList",
+          "group": "navigation"
+        },
+        {
+          "command": "todone.refresh",
+          "when": "view == todoneTodoList",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "todone.toggleDone",
+          "when": "view == todoneTodoList && viewItem == todoItem",
+          "group": "inline"
+        },
+        {
+          "command": "todone.deleteTodo",
+          "when": "view == todoneTodoList && viewItem == todoItem",
+          "group": "inline"
+        },
+        {
+          "command": "todone.clearCompleted",
+          "when": "view == todoneTodoList && viewItem == doneSection",
+          "group": "inline"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "todone.addTodo",
+        "key": "ctrl+shift+a",
+        "mac": "cmd+shift+a",
+        "when": "view == todoneTodoList || focusedView == todoneTodoList"
+      },
+      {
+        "command": "todone.toggleDone",
+        "key": "ctrl+enter",
+        "mac": "cmd+enter",
+        "when": "focusedView == todoneTodoList && viewItem == todoItem"
+      },
+      {
+        "command": "todone.deleteTodo",
+        "key": "delete",
+        "mac": "delete",
+        "when": "focusedView == todoneTodoList && viewItem == todoItem"
+      },
+      {
+        "command": "todone.refresh",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r",
+        "when": "view == todoneTodoList || focusedView == todoneTodoList"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.x",
+    "@types/vscode": "^1.80.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.45.0",
+    "typescript": "^5.1.6"
+  }
+}
